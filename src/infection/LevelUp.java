@@ -6,8 +6,8 @@ import java.awt.Graphics;
 
 public class LevelUp {
 	
-	public int xCor = Main.screenX;
-	public int yCor = Main.screenY;
+	public int xCor = Main.SCREENX;
+	public int yCor = Main.SCREENY;
 	public int size = 20;
 	public boolean leveled = false;
 	

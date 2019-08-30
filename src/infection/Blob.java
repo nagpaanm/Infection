@@ -1,7 +1,7 @@
 package infection;
 
 public class Blob extends Enemy{
-	public int size = 60;
+	public int size = 90;
 	public int reduction = 5;
 	
 	public Blob(int destX, int destY) {

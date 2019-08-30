@@ -6,8 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class BodyArmor {
 	public int size = 20;
-	public int xCor = ThreadLocalRandom.current().nextInt(0 + size, Main.screenX - 2*size);
-	public int yCor = ThreadLocalRandom.current().nextInt(0 + size, Main.screenY - 2*size);
+	public int xCor = ThreadLocalRandom.current().nextInt(0 + size, Main.SCREENX - 2*size);
+	public int yCor = ThreadLocalRandom.current().nextInt(0 + size, Main.SCREENY - 2*size);
 	public boolean collectable = false;
 	public boolean collected = false;
 	

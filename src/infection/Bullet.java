@@ -5,7 +5,7 @@ import java.awt.Graphics;
 
 public class Bullet {
 	
-	public int size = 8;
+	public int size = 10;
 	public float xCor;
 	public float yCor;
 	public int destX;

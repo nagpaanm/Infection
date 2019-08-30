@@ -7,8 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Health {
 	public int sizeL = 20;
 	public int sizeW = 25;
-	public int xCor = ThreadLocalRandom.current().nextInt(0, Main.screenX - sizeW);
-	public int yCor = ThreadLocalRandom.current().nextInt(0, Main.screenY - sizeL);
+	public int xCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENX - sizeW);
+	public int yCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENY - sizeL);
 	public boolean pickedUp = false;
 	public boolean collectable = false;
 	public int spawnRate = 20;

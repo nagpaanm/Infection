@@ -4,9 +4,9 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Player {
 	
-	public int size = 30;
-	public int xCor = 200;
-	public int yCor = 200;
+	public int size = 45;
+	public int xCor = (int) Main.SCREENX/2;
+	public int yCor = (int) Main.SCREENY/2;
 	public int xSpeed = 0;
 	public int ySpeed = 0;
 	public int maxSpeed = 2;
@@ -27,8 +27,8 @@ public class Player {
 	}
 	
 	public void relocate(){
-		xCor = ThreadLocalRandom.current().nextInt(0, Main.screenX - size);
-		yCor = ThreadLocalRandom.current().nextInt(0, Main.screenY - size);
+		xCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENX - size);
+		yCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENY - size);
 	}
 
 }

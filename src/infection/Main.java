@@ -2,7 +2,6 @@ package infection;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
@@ -22,8 +21,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Main extends JPanel implements ActionListener, KeyListener, MouseMotionListener, MouseListener{
 
-	public final static int screenX = 800;
-	public final static int screenY = 600;
+	public final static int SCREENX = 1200;
+	public final static int SCREENY = 800;
 	private Player player = new Player();
 	private Crosshair crosshair = new Crosshair();
 	private int  level = 1;
@@ -45,13 +44,13 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	private LevelUp LU = new LevelUp();
 	private boolean levelUpStart = true;
 	private ArrayList<Enemy> elist = level();
-	private ArrayList<Bullet> blist = new ArrayList<Bullet>();
-	private ArrayList<Grenade> glist = new ArrayList<Grenade>();
-	private ArrayList<Blood> bloodList = new ArrayList<Blood>();
+	private ArrayList<Bullet> blist = new ArrayList();
+	private ArrayList<Grenade> glist = new ArrayList();
+	private ArrayList<Blood> bloodList = new ArrayList();
 	private ArrayList<Blob> blobList = blobLevel();
 	private ArrayList<Fury> flist = furyLevel();
 	private static File music = new File("C:/Users/Anmol/Desktop/uoft/Year2/SecondSem/CSC207/Personal/GTABTH.WAV");
-	private Blood mainScreenBlood = new Blood(screenX/2, screenY/2);
+	private Blood mainScreenBlood = new Blood(SCREENX/2, SCREENY/2);
 	
 	public static void main(String[] args){
 		JFrame window = new JFrame("INFECTION");
@@ -82,8 +81,9 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		}
 	}
 
+        @Override
 	public Dimension getPreferredSize(){
-		return new Dimension(screenX, screenY);
+		return new Dimension(SCREENX, SCREENY);
 	}
 	
 	@Override
@@ -97,8 +97,8 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		}
 		if (end != true && begin != false){
 			bulletsAll = bullets + blist.size();
-			g.setColor(new Color(235, 235, 235));
-			g.fillRect(0, 0, screenX, screenY);
+			g.setColor(new Color(255, 255, 255));
+			g.fillRect(0, 0, SCREENX, SCREENY);
 			if (level == 1 && levelUpStart){
 				LU.create(g, level);
 				if (LU.size >= 200){
@@ -106,8 +106,8 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 					levelUpStart = false;
 				}
 			}
-			if (player.yCor <= 0 - player.size || player.yCor >= screenY + player.size || player.xCor <= 0 - player.size ||
-					player.xCor >= screenX + player.size){
+			if (player.yCor <= 0 - player.size || player.yCor >= SCREENY + player.size || player.xCor <= 0 - player.size ||
+					player.xCor >= SCREENX + player.size){
 				player.relocate();
 			}
 			if (level > 20){
@@ -185,15 +185,17 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 				bArmor.size -= bArmor.size;
 				bArmor.collected = true;
 			}
-			ArrayList<Enemy> enemyList = new ArrayList<Enemy>();
-			ArrayList<Blob> cycleBlobList = new ArrayList<Blob>();
-			ArrayList<Fury> furyList = new ArrayList<Fury>();
+			ArrayList<Enemy> enemyList = new ArrayList();
+			ArrayList<Blob> cycleBlobList = new ArrayList();
+			ArrayList<Fury> furyList = new ArrayList();
 			
-			g.setColor(new Color(255, 152, 48));
-			g.setFont(new Font("ariel", Font.BOLD, 20));
-			if (bulletsAll > 0){
-				g.drawString("Accuracy: " + Math.round((((float) bulletKills)/((float) bulletsAll))*100) + "%", screenX/2 - 80, screenY/2);
+                        /*
+			g.setColor(new Color(0, 0, 0));
+			g.setFont(new Font
+                        ){
+				g.drawString("ACCURACY: " + Math.round((((float) bulletKills)/((float) bulletsAll))*100) + "%", SCREENX/2 - 80, SCREENY/2);
 			}
+                        */
 			for (Blood blood: bloodList){
 				blood.create(g);
 			}
@@ -256,12 +258,13 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 					i.createBullet(g);
 					for (Enemy e: enemyList){
 						if (e.detectCollision(i.xCor, i.yCor, i.size) == true && i.size != 0 && e.size != 0){
-							e.size = 0;
+							e.health -=50;
 							i.size = 0;
-							if (e.size == 0){
+                                                        bloodList.add(new Blood(e.xCor, e.yCor));
+							if (e.health <= 0){
+                                                                e.size = 0;
 								dead += 1;
-								kills += 1;
-								bloodList.add(new Blood(e.xCor, e.yCor));
+								kills += 1; 
 								bulletKills += 1;
 							}
 						}
@@ -349,13 +352,13 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 				if (player.health != player.maxHealth){
 					player.health += 5;
 				}
-				bloodList = new ArrayList<Blood>();
+				bloodList = new ArrayList();
 				if (GPU.pickedUp){
 					player.grenadeCount = player.maxGrenade;
 				}
 				bullets += blist.size();
-				blist = new ArrayList<Bullet>();
-				glist = new ArrayList<Grenade>();
+				blist = new ArrayList();
+				glist = new ArrayList();
 				elist = level();
 				blobList = blobLevel();
 				blobCounter = 0;
@@ -387,28 +390,28 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 			// Level
 			g.setColor(new Color(55, 179, 252));
 			g.setFont(new Font("ariel", Font.BOLD, 20));
-			g.drawString("Level: " + level, screenX - 95, 30);
+			g.drawString("LEVEL: " + level, 10, 30);
 			// Kills
 			g.setColor(new Color(255, 0, 51));
 			g.setFont(new Font("ariel", Font.BOLD, 20));
-			g.drawString("Kills: " + kills, screenX - 95, 60);
+			g.drawString("KILLS: " + kills, 10, 60);
 			// Health
 			g.setColor(new Color(39, 215, 69));
 			g.setFont(new Font("ariel", Font.BOLD, 20));
-			g.drawString("Health: " + player.health, screenX - 115, 90);
+			g.drawString("HEALTH: " + player.health, 10, 90);
 			if (player.grenadeCount > 0){
 				GPU.draw(g);
 			}
 			if (player.maxHealth > 100){
 				g.setColor(new Color(34,139,34));
-				g.fillRect(47, screenY - 23, 15, 5);
-				g.fillRect(52, screenY - 28, 5, 15);
+				g.fillRect(47, SCREENY - 23, 15, 5);
+				g.fillRect(52, SCREENY - 28, 5, 15);
 			}
 		}
 	}
 	
 	public ArrayList<Enemy> level(){
-		ArrayList<Enemy> elist = new ArrayList<Enemy>();
+		ArrayList<Enemy> elist = new ArrayList();
 		int counter = 0;
 		while (counter <level){
 			Enemy enemy = new Enemy(player.xCor, player.yCor);
@@ -419,7 +422,7 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	}
 	
 	public ArrayList<Blob> blobLevel(){
-		ArrayList<Blob> blobList = new ArrayList<Blob>();
+		ArrayList<Blob> blobList = new ArrayList();
 		if (level >= 12 && level % 2 == 0){
 			int counter = 0;
 			while (counter < blobAmount){
@@ -432,7 +435,7 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	}
 	
 	public ArrayList<Fury> furyLevel(){
-		ArrayList<Fury> furyList = new ArrayList<Fury>();
+		ArrayList<Fury> furyList = new ArrayList();
 		if (level > 20 && level % 3 == 0){
 			int counter = 0;
 			while (counter < furyAmount){
@@ -445,21 +448,17 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	}
 	
 	public void newGame(Graphics g){
-		g.setColor(new Color(235, 235, 235));
-		g.fillRect(0, 0, screenX, screenY);
+		g.setColor(new Color(255, 255, 255));
+		g.fillRect(0, 0, SCREENX, SCREENY);
 		g.setColor(new Color(189, 54, 255));
-		g.setFont(new Font("ariel", Font.BOLD, 140));
-		g.drawString("INFECTION", 25, 150);
-		g.setColor(Color.BLUE);
+		g.setFont(new Font("ariel", Font.BOLD, 100));
+		g.drawString("INFECTION", 100, 150);
+		g.setColor(Color.BLACK);
 		g.setFont(new Font("ariel", Font.BOLD, 20));
-		g.drawString("Press Enter to begin.", screenX/3, screenY/2);
-		g.setColor(new Color(255, 102, 102));
-		g.setFont(new Font("ariel", Font.BOLD, 60));
-		g.drawString("Creator: Anmol Nagpal", 85, screenY - 100);
-		g.setColor(new Color(255, 51, 51));
-		g.setFont(new Font("ariel", Font.BOLD, 20));
-		g.drawString("Music: Bury The Hatchet - Grand Theft Auto V (Rockstar Games)", 100, screenY - 30);
-		g.setColor(new Color(189, 54, 255));
+		g.drawString("PRESS ENTER TO CONTINUE", SCREENX - 400, SCREENY - 150);
+		g.setColor(new Color(0, 0, 0));
+		g.setFont(new Font("ariel", Font.BOLD, 35));
+		g.drawString("Created By Anmol Nagpal", 100, 300);
 		mainScreenBlood.createMain(g);
 		
 	}
@@ -467,12 +466,12 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	public void endGame(Graphics g){
 		g.setColor(new Color(55, 179, 252));
 		g.setFont(new Font("ariel", Font.BOLD, 60));
-		g.drawString("Level: " + level, screenX/2 - 140, screenY/2 - 150);
+		g.drawString("LEVEL: " + level, 200, 250);
 		g.setColor(new Color(255, 0, 51));
 		g.setFont(new Font("ariel", Font.BOLD, 60));
-		g.drawString("Kills: " + kills, screenX/2 - 140, screenY/2 - 60);
+		g.drawString("KILLS: " + kills, 200, 450);
 		g.setColor(new Color(255, 255, 0));
-		g.drawString("Score: " + Math.round((((float) bulletKills)/((float) bullets))*100) * kills, screenX/2 - 170, screenY/2 + 120);
+		g.drawString("SCORE: " + Math.round((((float) bulletKills)/((float) bullets))*100) * kills, 200, 650);
 	}
 	
 	public void reset(){
@@ -488,10 +487,10 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		end = false;
 		restart = false;
 		elist = level();
-		blist = new ArrayList<Bullet>();
-		bloodList = new ArrayList<Blood>();
+		blist = new ArrayList();
+		bloodList = new ArrayList();
 		bArmor = new BodyArmor();
-		glist = new ArrayList<Grenade>();
+		glist = new ArrayList();
 		GPU = new GrenadePickUp();
 		healthPickUp = new Health();
 		blobList = blobLevel();
@@ -502,7 +501,7 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		furyAmount = 3;
 		LU = new LevelUp();
 		levelUpStart = true;
-		mainScreenBlood = new Blood(screenX/2, screenY/2);
+		mainScreenBlood = new Blood(SCREENX/2, SCREENY/2);
 	}
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -526,20 +525,21 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	public void right(){
 		player.xSpeed = player.maxSpeed;
 	}
-
+        
+        //player movement
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_UP){
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W){
 			up();
 		}
-		if (code == KeyEvent.VK_DOWN){
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S){
 			down();
 		}
-		if (code == KeyEvent.VK_LEFT){
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A){
 			left();
 		}
-		if (code == KeyEvent.VK_RIGHT){
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D){
 			right();
 		}
 		if (code == KeyEvent.VK_ENTER && begin == false){
@@ -561,16 +561,16 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	@Override
 	public void keyReleased(KeyEvent e) {
 		int code = e.getKeyCode();
-		if (code == KeyEvent.VK_UP){
+		if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W){
 			player.ySpeed = 0;
 		}
-		if (code == KeyEvent.VK_DOWN){
+		if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S){
 			player.ySpeed = 0;
 		}
-		if (code == KeyEvent.VK_LEFT){
+		if (code == KeyEvent.VK_LEFT || code == KeyEvent.VK_A){
 			player.xSpeed = 0;
 		}
-		if (code == KeyEvent.VK_RIGHT){ 
+		if (code == KeyEvent.VK_RIGHT || code == KeyEvent.VK_D){ 
 			player.xSpeed = 0;
 		}
 	}
@@ -587,9 +587,6 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 			player.grenadeCount -= 1;
 		}
 	}
-	
-	@Override
-	public void keyTyped(KeyEvent e) {}
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
@@ -609,5 +606,9 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 
 	@Override
 	public void mouseExited(MouseEvent e) {}
+        
+	@Override
+	public void keyTyped(KeyEvent e) {}
+
 
 }

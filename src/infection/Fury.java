@@ -3,7 +3,7 @@ package infection;
 
 public class Fury extends Enemy {
 	
-	public int size = 15;
+	public int size = 25;
 	public int speed = 1;
 	public int health = 200;
 
@@ -26,12 +26,9 @@ public class Fury extends Enemy {
 		}
 	}
 	
+        @Override
 	public boolean detectCollision(float newX, float newY, int newSize){
-		if (xCor - newSize < newX && xCor + size > newX && yCor - newSize < newY && yCor + size > newY){
-			return true;
-		}
-		// else
-		return false;
+            return xCor - newSize < newX && xCor + size > newX && yCor - newSize < newY && yCor + size > newY;
 	}
 	
 

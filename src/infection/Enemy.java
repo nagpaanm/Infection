@@ -3,12 +3,12 @@ package infection;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class Enemy{
-	public int size = 20;
+	public int size = 45;
 	public int health = 100;
 	public int reducedSize;
-	public int spawnX = ThreadLocalRandom.current().nextInt(-500, Main.screenX + 500); //500
-	public int spawnY = ThreadLocalRandom.current().nextInt(-500, Main.screenY + 500); //500
-	public int spawnDist = 400;
+	public int spawnX = ThreadLocalRandom.current().nextInt(-500, Main.SCREENX + 500); //500
+	public int spawnY = ThreadLocalRandom.current().nextInt(-500, Main.SCREENY + 500); //500
+	public int spawnDist = 600;
 	public int xCor;
 	public int yCor;
 	public int speed = ThreadLocalRandom.current().nextInt(1, 2); // 1, 2
@@ -20,8 +20,8 @@ public class Enemy{
 		this.destY = destY;
 		if (Math.abs(spawnX - destX) < spawnDist && Math.abs(spawnY - destY) < spawnDist){
 			while (Math.abs(spawnX - destX) < spawnDist && Math.abs(spawnY - destY) < spawnDist){
-				spawnX = ThreadLocalRandom.current().nextInt(-500, Main.screenX + 500);
-				spawnY = ThreadLocalRandom.current().nextInt(-500, Main.screenY + 500);
+				spawnX = ThreadLocalRandom.current().nextInt(-500, Main.SCREENX + 500);
+				spawnY = ThreadLocalRandom.current().nextInt(-500, Main.SCREENY + 500);
 			}
 		}
 		xCor = spawnX;
@@ -53,8 +53,8 @@ public class Enemy{
 	
 	/** method initially used in draft, but no need for it in final copy. */
 	public void relocate(){
-		xCor = ThreadLocalRandom.current().nextInt(0, Main.screenX);
-		yCor = ThreadLocalRandom.current().nextInt(0, Main.screenY);
+		xCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENX);
+		yCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENY);
 		size = 20;
 	}
 }

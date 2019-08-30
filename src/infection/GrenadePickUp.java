@@ -6,8 +6,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class GrenadePickUp {
 	public int size = 15;
-	public int xCor = ThreadLocalRandom.current().nextInt(0, Main.screenX - size);
-	public int yCor = ThreadLocalRandom.current().nextInt(0, Main.screenY - size);
+	public int xCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENX - size);
+	public int yCor = ThreadLocalRandom.current().nextInt(0, Main.SCREENY - size);
 	public boolean pickedUp = false;
 	public boolean collectable = false;
 	
@@ -22,11 +22,11 @@ public class GrenadePickUp {
 	
 	public void draw(Graphics g){
 		g.setColor(new Color(46,139,87));
-		g.fillOval(10, Main.screenY - 30, 15, 15);
-		g.fillOval(22, Main.screenY - 30, 15, 15);
-		g.fillOval(16, Main.screenY - 25, 15, 15);
+		g.fillOval(10, Main.SCREENY - 30, 15, 15);
+		g.fillOval(22, Main.SCREENY - 30, 15, 15);
+		g.fillOval(16, Main.SCREENY - 25, 15, 15);
 		g.setColor(Color.BLACK);
-		g.drawOval(10, Main.screenY - 30, 15, 15);
+		g.drawOval(10, Main.SCREENY - 30, 15, 15);
 	}
 
 }
