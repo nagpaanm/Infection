@@ -25,8 +25,8 @@ import javax.swing.*;
 @SuppressWarnings("serial")
 public class Main extends JPanel implements ActionListener, KeyListener, MouseMotionListener, MouseListener{
 
-	public final static int SCREENX = 1200;
-	public final static int SCREENY = 800;
+	public final static int SCREENX = 800;
+	public final static int SCREENY = 600;
 	private Player player = new Player();
 	private Crosshair crosshair = new Crosshair();
 	private int  level = 1;
@@ -483,9 +483,9 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		g.drawString("LEVEL: " + level, 200, 250);
 		g.setColor(new Color(255, 0, 51));
 		g.setFont(new Font("ariel", Font.BOLD, 60));
-		g.drawString("KILLS: " + kills, 200, 450);
+		g.drawString("KILLS: " + kills, 200, 350);
 		g.setColor(new Color(255, 255, 0));
-		g.drawString("SCORE: " + Math.round((((float) bulletKills)/((float) bullets))*100) * kills, 200, 650);
+		g.drawString("SCORE: " + Math.round((((float) bulletKills)/((float) bullets))*100) * kills, 200, 450);
 	}
 	
 	public void reset(){
