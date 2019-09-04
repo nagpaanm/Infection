@@ -12,9 +12,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 
 
@@ -49,7 +53,9 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 	private ArrayList<Blood> bloodList = new ArrayList();
 	private ArrayList<Blob> blobList = blobLevel();
 	private ArrayList<Fury> flist = furyLevel();
-	private static File music = new File("C:/Users/Anmol/Desktop/uoft/Year2/SecondSem/CSC207/Personal/GTABTH.WAV");
+        private static final String SONGNAME = "music.wav";
+	private static final File MUSIC = new File(SONGNAME);
+        private static final String PATH = MUSIC.getAbsolutePath();
 	private Blood mainScreenBlood = new Blood(SCREENX/2, SCREENY/2);
 	
 	public static void main(String[] args){
@@ -67,17 +73,25 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
 		window.addMouseListener(game);
 		window.setFocusable(true);
 		window.setFocusTraversalKeysEnabled(false);	
-		PlaySound(music);
+		PlaySound();
 	}
+        
+        public static String getPath(){
+            String actualPath = PATH.substring(0, PATH.length() - SONGNAME.length());
+            return actualPath;
+        }
 	
-	private static void PlaySound(File Sound) {
+	private static void PlaySound() {
+                
 		try {
+                    AudioInputStream audioIn = AudioSystem.getAudioInputStream(new File(getPath() + "/src/infection/" + SONGNAME));
 			Clip clip = AudioSystem.getClip();
-			clip.open(AudioSystem.getAudioInputStream(Sound));
+			clip.open(audioIn);
 			clip.start();
 			clip.loop(Clip.LOOP_CONTINUOUSLY);
-		}catch(Exception e)
+		}catch(IOException | LineUnavailableException | UnsupportedAudioFileException e)
 		{
+                    System.out.println(e);
 		}
 	}
 
@@ -609,6 +623,4 @@ public class Main extends JPanel implements ActionListener, KeyListener, MouseMo
         
 	@Override
 	public void keyTyped(KeyEvent e) {}
-
-
 }
