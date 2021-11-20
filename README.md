@@ -9,4 +9,4 @@ Controls:
   - throw grenade: right-click
 
 
-Some of the challenges that I faced during the development of this project was collision detection, spontaneous animations, and having zombies spawn randomly in a 'correct' boundary range. These challenges served as great learning experiences. 
+Some of the challenges that I faced during the development of this project was collision detection, spontaneous animations, and having zombies spawn randomly in a 'correct' boundary range. These challenges served as an excellnt learning experience for me. 
